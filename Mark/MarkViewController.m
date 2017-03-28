@@ -8,6 +8,7 @@
 
 #import "MarkViewController.h"
 #import "MarkNormalCell.h"
+#import "MarkShowCell.h"
 
 struct Position {
     NSInteger column;
@@ -22,6 +23,9 @@ struct Position {
 @property (nonatomic, strong) UITableView * rightTableView;
 @property (nonatomic, strong) NSMutableArray * leftDataArray;
 @property (nonatomic, strong) NSMutableArray * rightDataArray;
+
+@property (nonatomic, strong) UITableView * centerTableView;
+@property (nonatomic, strong) NSMutableArray * itemDataArray;
 
 @property (nonatomic, assign) struct Position selectedPostition;
 
@@ -42,6 +46,7 @@ struct Position {
     // Do any additional setup after loading the view.
     _leftDataArray = [NSMutableArray arrayWithArray:@[@"p1", @"p2", @"p3", @"p4", @"p5"]];
     _rightDataArray = [NSMutableArray arrayWithArray:@[@"q1", @"q2", @"q3", @"q4", @"q5"]];
+    _itemDataArray = [NSMutableArray arrayWithArray:@[@"2FG", @"3FG", @"1FG", @"Reb", @"Ass", @"Steal", @"Block"]];
     [self createUI];
 }
 
@@ -69,14 +74,40 @@ struct Position {
     _rightTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _rightTableView.bounces = NO;
     [self.view addSubview:_rightTableView];
+    
+    _centerTableView = [[UITableView alloc]initWithFrame:CGRectMake(MarkCellWidth, 0, ScreenWidth - MarkCellWidth * 2, ScreenHeight - NavigationBarHeight) style:UITableViewStylePlain];
+    _centerTableView.delegate = self;
+    _centerTableView.dataSource = self;
+    _centerTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    _centerTableView.bounces = NO;
+    [self.view addSubview:_centerTableView];
 }
 
 #pragma mark TableView Delegate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if (_centerTableView == tableView) {
+        return 10;
+    }
     return 5;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if (tableView == _centerTableView) {
+        static NSString * cellId = @"centerCellId";
+        MarkShowCell * cell = [tableView dequeueReusableCellWithIdentifier:cellId];
+        if (nil == cell) {
+            cell = [[MarkShowCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        }
+        
+        if (_itemDataArray.count > indexPath.row) {
+            cell.itemNameLabel.text = _itemDataArray[indexPath.row];
+        }
+        
+        return cell;
+    }
+    
     static NSString * cellId = @"selectedCellId";
     
     MarkNormalCell * cell = [tableView dequeueReusableCellWithIdentifier:cellId];
@@ -116,20 +147,19 @@ struct Position {
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-//    if (tableView == _leftTableView && _selectedPostition.column == 0) {
-//        if (indexPath.row == _selectedPostition.line) {
-//            return (ScreenHeight - NavigationBarHeight - 100) / 5 + 50;
-//        }
-//    } else if (tableView == _rightTableView && _selectedPostition.column == 1) {
-//        if (indexPath.row == _selectedPostition.line) {
-//            return (ScreenHeight - NavigationBarHeight - 100) / 5 + 50;
-//        }
-//    }
-//    return (ScreenHeight - NavigationBarHeight - 100) / 5;
+
+    if (tableView == _centerTableView) {
+        return MarkShowCellHeight;
+    }
     return MarkCellHeight;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if (tableView == _centerTableView) {
+        return;
+    }
+    
     if (tableView == _leftTableView) {
         _selectedPostition.column = 0;
     } else if (tableView == _rightTableView) {
