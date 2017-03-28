@@ -7,6 +7,7 @@
 //
 
 #import "MarkViewController.h"
+#import "MarkNormalCell.h"
 
 struct Position {
     NSInteger column;
@@ -55,14 +56,14 @@ struct Position {
 
 #pragma mark - UI -
 - (void)createUI {
-    _leftTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 100, ScreenHeight - NavigationBarHeight) style:UITableViewStylePlain];
+    _leftTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, MarkCellWidth, ScreenHeight - NavigationBarHeight) style:UITableViewStylePlain];
     _leftTableView.delegate = self;
     _leftTableView.dataSource = self;
     _leftTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _leftTableView.bounces = NO;
     [self.view addSubview:_leftTableView];
     
-    _rightTableView = [[UITableView alloc]initWithFrame:CGRectMake(ScreenWidth - 100, 0, 100, ScreenHeight - NavigationBarHeight) style:UITableViewStylePlain];
+    _rightTableView = [[UITableView alloc]initWithFrame:CGRectMake(ScreenWidth - MarkCellWidth, 0, MarkCellWidth, ScreenHeight - NavigationBarHeight) style:UITableViewStylePlain];
     _rightTableView.delegate = self;
     _rightTableView.dataSource = self;
     _rightTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -77,20 +78,37 @@ struct Position {
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString * cellId = @"selectedCellId";
-    UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:cellId];
+    
+    MarkNormalCell * cell = [tableView dequeueReusableCellWithIdentifier:cellId];
     if (nil == cell) {
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
+        cell = [[MarkNormalCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        Border(cell);
+//        Border(cell);
     }
     
     if (tableView == _leftTableView) {
         if (_leftDataArray.count > indexPath.row) {
-            cell.textLabel.text = _leftDataArray[indexPath.row];
+            cell.shirtView.name = _leftDataArray[indexPath.row];
+//            cell.textLabel.text = _leftDataArray[indexPath.row];
+            cell.shirtView.color = RGBA(100, 30, 255, 1);
+            cell.shirtView.number = [NSString stringWithFormat:@"%ld", indexPath.row + 7];
+            if (_selectedPostition.column == 0 && _selectedPostition.line == indexPath.row) {
+                [cell selectCell:YES];
+            } else {
+                [cell selectCell:NO];
+            }
         }
     } else if (tableView == _rightTableView) {
         if (_rightDataArray.count > indexPath.row) {
-            cell.textLabel.text = _rightDataArray[indexPath.row];
+            cell.shirtView.name = _rightDataArray[indexPath.row];
+//            cell.textLabel.text = _rightDataArray[indexPath.row];
+            cell.shirtView.color = RGBA(230, 230, 230, 1);
+            cell.shirtView.number = [NSString stringWithFormat:@"%ld", indexPath.row + 7];
+            if (_selectedPostition.column == 1 && _selectedPostition.line == indexPath.row) {
+                [cell selectCell:YES];
+            } else {
+                [cell selectCell:NO];
+            }
         }
     }
     
@@ -98,16 +116,17 @@ struct Position {
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (tableView == _leftTableView && _selectedPostition.column == 0) {
-        if (indexPath.row == _selectedPostition.line) {
-            return (ScreenHeight - NavigationBarHeight - 100) / 5 + 50;
-        }
-    } else if (tableView == _rightTableView && _selectedPostition.column == 1) {
-        if (indexPath.row == _selectedPostition.line) {
-            return (ScreenHeight - NavigationBarHeight - 100) / 5 + 50;
-        }
-    }
-    return (ScreenHeight - NavigationBarHeight - 100) / 5;
+//    if (tableView == _leftTableView && _selectedPostition.column == 0) {
+//        if (indexPath.row == _selectedPostition.line) {
+//            return (ScreenHeight - NavigationBarHeight - 100) / 5 + 50;
+//        }
+//    } else if (tableView == _rightTableView && _selectedPostition.column == 1) {
+//        if (indexPath.row == _selectedPostition.line) {
+//            return (ScreenHeight - NavigationBarHeight - 100) / 5 + 50;
+//        }
+//    }
+//    return (ScreenHeight - NavigationBarHeight - 100) / 5;
+    return MarkCellHeight;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

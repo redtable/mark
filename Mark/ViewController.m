@@ -27,35 +27,35 @@
     [btn addTarget:self action:@selector(tapButton:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:btn];
     
-    ShirtView * shirt = [[ShirtView alloc]initWithFrame:CGRectMake(100, 150, 100, 100)];
-    shirt.name = @"西里热江";
-    shirt.number = @"00";
-    shirt.color = RGBA(100, 100, 255, 1);
-    [self.view addSubview:shirt];
-    
-    ShirtView * shirt1 = [[ShirtView alloc]initWithFrame:CGRectMake(220, 150, 80, 110)];
-    shirt1.name = @"James";
-    shirt1.number = @"6";
-    shirt1.color = RGBA(100, 100, 255, 1);
-    [self.view addSubview:shirt1];
-    
-    ShirtView * shirt2 = [[ShirtView alloc]initWithFrame:CGRectMake(100, 280, 60, 50)];
-    shirt2.name = @"李明";
-    shirt2.number = @"11";
-    shirt2.color = RGBA(100, 100, 255, 1);
-    [self.view addSubview:shirt2];
-    
-    ShirtView * shirt3 = [[ShirtView alloc]initWithFrame:CGRectMake(220, 280, 70, 70)];
-    shirt3.name = @"阿的江";
-    shirt3.number = @"99";
-    shirt3.color = RGBA(100, 100, 255, 1);
-    [self.view addSubview:shirt3];
-    
-    ShirtView * shirt4 = [[ShirtView alloc]initWithFrame:CGRectMake(100, 380, 40, 40)];
-    shirt4.name = @"Mutombo";
-    shirt4.number = @"33";
-    shirt4.color = RGBA(100, 100, 255, 1);
-    [self.view addSubview:shirt4];
+//    ShirtView * shirt = [[ShirtView alloc]initWithFrame:CGRectMake(100, 150, 100, 100)];
+//    shirt.name = @"西里热江";
+//    shirt.number = @"00";
+//    shirt.color = RGBA(100, 100, 255, 1);
+//    [self.view addSubview:shirt];
+//    
+//    ShirtView * shirt1 = [[ShirtView alloc]initWithFrame:CGRectMake(220, 150, 80, 110)];
+//    shirt1.name = @"James";
+//    shirt1.number = @"6";
+//    shirt1.color = RGBA(100, 100, 255, 1);
+//    [self.view addSubview:shirt1];
+//    
+//    ShirtView * shirt2 = [[ShirtView alloc]initWithFrame:CGRectMake(100, 280, 60, 50)];
+//    shirt2.name = @"李明";
+//    shirt2.number = @"11";
+//    shirt2.color = RGBA(100, 100, 255, 1);
+//    [self.view addSubview:shirt2];
+//    
+//    ShirtView * shirt3 = [[ShirtView alloc]initWithFrame:CGRectMake(220, 280, 70, 70)];
+//    shirt3.name = @"阿的江";
+//    shirt3.number = @"99";
+//    shirt3.color = RGBA(100, 100, 255, 1);
+//    [self.view addSubview:shirt3];
+//    
+//    ShirtView * shirt4 = [[ShirtView alloc]initWithFrame:CGRectMake(100, 380, 40, 40)];
+//    shirt4.name = @"Mutombo";
+//    shirt4.number = @"33";
+//    shirt4.color = RGBA(100, 100, 255, 1);
+//    [self.view addSubview:shirt4];
     
 }
 
