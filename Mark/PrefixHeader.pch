@@ -1,0 +1,50 @@
+//
+//  PrefixHeader.pch
+//  Mark
+//
+//  Created by WangSen on 2017/3/28.
+//  Copyright © 2017年 WangSen. All rights reserved.
+//
+
+
+#define ScreenWidth     [UIScreen mainScreen].bounds.size.width
+#define ScreenHeight    [UIScreen mainScreen].bounds.size.height
+#define NavigationBarHeight 64
+//#define ScreenWidth CGSizeMake([UIScreen mainScreen].nativeBounds.size.width/[UIScreen mainScreen].nativeScale, [UIScreen mainScreen].nativeBounds.size.height/[UIScreen mainScreen].nativeScale).size.width
+//#define ScreenHeight CGSizeMake([UIScreen mainScreen].nativeBounds.size.width/[UIScreen mainScreen].nativeScale, [UIScreen mainScreen].nativeBounds.size.height/[UIScreen mainScreen].nativeScale).size.height
+
+#ifndef __OPTIMIZE__
+#define NSLog(...) NSLog(__VA_ARGS__)
+#else
+#define NSLog(...){}
+#endif
+
+#define WeakSelf __weak typeof(self) weakSelf = self;
+
+#define FollowX(v)      v.frame.origin.x
+#define FollowXW(v)     (v.frame.origin.x + v.frame.size.width)
+#define FollowW(v)      v.frame.size.width
+#define FollowY(v)      v.frame.origin.y
+#define FollowYH(v)     (v.frame.origin.y + v.frame.size.height)
+#define FollowH(v)      v.frame.size.height
+
+
+#define onePx       (1 / [UIScreen mainScreen].scale)
+
+#define RGBA(r, g, b, a) [UIColor colorWithRed:(CGFloat)r / 255 green:(CGFloat)g / 255 blue:(CGFloat)b / 255 alpha:a]
+
+#define LineColor RGBA(210, 210, 210, 1)
+
+#define Image(name)     [UIImage imageNamed:name]
+
+#define NormalFont(s)   [UIFont systemFontOfSize:s]
+#define BoldFont(s)     [UIFont boldSystemFontOfSize:s]
+
+
+#define UIDebug 0
+
+#define Border(v) v.layer.borderWidth = onePx; \
+v.layer.borderColor = [UIColor redColor].CGColor;
+
+#define BorderColor(v, color) v.layer.borderWidth = onePx; \
+v.layer.borderColor = color.CGColor;
