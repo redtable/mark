@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "MarkNormalCell.h"
+#import "OperationModel.h"
 
 #define MarkShowCellHeight (ScreenHeight - NavigationBarHeight - 100) / 10
 

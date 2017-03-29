@@ -27,6 +27,10 @@ struct Position {
 @property (nonatomic, strong) UITableView * centerTableView;
 @property (nonatomic, strong) NSMutableArray * itemDataArray;
 
+@property (nonatomic, strong) UILabel * leftValueLabel;
+@property (nonatomic, strong) UILabel * rightValueLabel;
+@property (nonatomic, strong) UILabel * progrerssLabel;
+
 @property (nonatomic, assign) struct Position selectedPostition;
 
 @end
@@ -44,8 +48,24 @@ struct Position {
     _selectedPostition.line = -1; // 0~5
     
     // Do any additional setup after loading the view.
-    _leftDataArray = [NSMutableArray arrayWithArray:@[@"p1", @"p2", @"p3", @"p4", @"p5"]];
-    _rightDataArray = [NSMutableArray arrayWithArray:@[@"q1", @"q2", @"q3", @"q4", @"q5"]];
+    _leftDataArray = [NSMutableArray arrayWithCapacity:5];
+    for (NSInteger i = 0 ; i < 5; i++) {
+        PlayerModel * player = [[PlayerModel alloc]init];
+        player.name = [NSString stringWithFormat:@"P%ld", i];
+        player.number = [NSString stringWithFormat:@"%ld",i];
+        [_leftDataArray addObject:player];
+    }
+    
+    
+    _rightDataArray = [NSMutableArray arrayWithCapacity:5];
+    for (NSInteger i = 0 ; i < 5; i++) {
+        PlayerModel * player = [[PlayerModel alloc]init];
+        player.name = [NSString stringWithFormat:@"Q%ld", i];
+        player.number = [NSString stringWithFormat:@"%ld",i + 30];
+        [_rightDataArray addObject:player];
+    }
+    
+    
     _itemDataArray = [NSMutableArray arrayWithArray:@[@"2FG", @"3FG", @"1FG", @"Reb", @"Ass", @"Steal", @"Block"]];
     [self createUI];
 }
@@ -75,11 +95,25 @@ struct Position {
     _rightTableView.bounces = NO;
     [self.view addSubview:_rightTableView];
     
+    UIView * headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth - MarkCellWidth * 2, 80)];
+    
+    _leftValueLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, FollowW(headerView) / 2, 60)];
+    Border(_leftValueLabel);
+    [headerView addSubview:_leftValueLabel];
+    
+    _rightValueLabel = [[UILabel alloc]initWithFrame:CGRectMake(FollowW(headerView) / 2, 0, FollowW(headerView) / 2, 60)];
+    Border(_rightValueLabel);
+    [headerView addSubview:_rightValueLabel];
+    
+    _progrerssLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, FollowYH(_leftValueLabel), FollowW(headerView), 20)];
+    [headerView addSubview:_progrerssLabel];
+    
     _centerTableView = [[UITableView alloc]initWithFrame:CGRectMake(MarkCellWidth, 0, ScreenWidth - MarkCellWidth * 2, ScreenHeight - NavigationBarHeight) style:UITableViewStylePlain];
     _centerTableView.delegate = self;
     _centerTableView.dataSource = self;
     _centerTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _centerTableView.bounces = NO;
+    _centerTableView.tableHeaderView = headerView;
     [self.view addSubview:_centerTableView];
 }
 
@@ -119,10 +153,10 @@ struct Position {
     
     if (tableView == _leftTableView) {
         if (_leftDataArray.count > indexPath.row) {
-            cell.shirtView.name = _leftDataArray[indexPath.row];
-//            cell.textLabel.text = _leftDataArray[indexPath.row];
+            PlayerModel * model = [_leftDataArray objectAtIndex:indexPath.row];
+            cell.shirtView.name = model.name;
             cell.shirtView.color = RGBA(100, 30, 255, 1);
-            cell.shirtView.number = [NSString stringWithFormat:@"%ld", indexPath.row + 7];
+            cell.shirtView.number = model.number;
             if (_selectedPostition.column == 0 && _selectedPostition.line == indexPath.row) {
                 [cell selectCell:YES];
             } else {
@@ -131,10 +165,11 @@ struct Position {
         }
     } else if (tableView == _rightTableView) {
         if (_rightDataArray.count > indexPath.row) {
-            cell.shirtView.name = _rightDataArray[indexPath.row];
+            PlayerModel * model = [_rightDataArray objectAtIndex:indexPath.row];
+            cell.shirtView.name = model.name;
 //            cell.textLabel.text = _rightDataArray[indexPath.row];
             cell.shirtView.color = RGBA(230, 230, 230, 1);
-            cell.shirtView.number = [NSString stringWithFormat:@"%ld", indexPath.row + 7];
+            cell.shirtView.number = model.number;
             if (_selectedPostition.column == 1 && _selectedPostition.line == indexPath.row) {
                 [cell selectCell:YES];
             } else {
@@ -157,6 +192,26 @@ struct Position {
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (tableView == _centerTableView) {
+        OperationType opType = indexPath.row;
+        PlayerModel * player;
+        OperationModel * op;
+        if (_selectedPostition.column == 0) {
+            if (_leftDataArray.count > _selectedPostition.line && _selectedPostition.line >= 0) {
+                player = [_leftDataArray objectAtIndex:_selectedPostition.line];
+                op = [[OperationModel alloc]initWithType:opType player:player];
+            }
+        } else if (_selectedPostition.column == 1) {
+            if (_rightDataArray.count > _selectedPostition.line && _selectedPostition.line >= 0) {
+                player = [_rightDataArray objectAtIndex:_selectedPostition.line];
+                op = [[OperationModel alloc]initWithType:opType player:player];
+            }
+        }
+        
+        if (op) {
+            [_dataArray addObject:op];
+            _progrerssLabel.text = [op getDescriptionString];
+            [_centerTableView reloadData];
+        }
         return;
     }
     
@@ -170,6 +225,8 @@ struct Position {
     [_leftTableView reloadData];
     [_rightTableView reloadData];
 }
+
+
 
 
 #pragma mark - Data -

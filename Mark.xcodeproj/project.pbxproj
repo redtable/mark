@@ -17,6 +17,7 @@
 		4B19C2921E8A40AB00A79017 /* MarkNormalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B19C2911E8A40AB00A79017 /* MarkNormalCell.m */; };
 		4B19C2951E8A425800A79017 /* ShirtView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B19C2941E8A425800A79017 /* ShirtView.m */; };
 		4B19C2981E8A6D0C00A79017 /* MarkShowCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B19C2971E8A6D0C00A79017 /* MarkShowCell.m */; };
+		4B77FC541E8BAE4500977015 /* OperationModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B77FC531E8BAE4500977015 /* OperationModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +40,8 @@
 		4B19C2941E8A425800A79017 /* ShirtView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShirtView.m; sourceTree = "<group>"; };
 		4B19C2961E8A6D0C00A79017 /* MarkShowCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarkShowCell.h; sourceTree = "<group>"; };
 		4B19C2971E8A6D0C00A79017 /* MarkShowCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MarkShowCell.m; sourceTree = "<group>"; };
+		4B77FC521E8BAE4500977015 /* OperationModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OperationModel.h; sourceTree = "<group>"; };
+		4B77FC531E8BAE4500977015 /* OperationModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OperationModel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +85,8 @@
 				4B19C2911E8A40AB00A79017 /* MarkNormalCell.m */,
 				4B19C2961E8A6D0C00A79017 /* MarkShowCell.h */,
 				4B19C2971E8A6D0C00A79017 /* MarkShowCell.m */,
+				4B77FC521E8BAE4500977015 /* OperationModel.h */,
+				4B77FC531E8BAE4500977015 /* OperationModel.m */,
 				4B19C2931E8A425700A79017 /* ShirtView.h */,
 				4B19C2941E8A425800A79017 /* ShirtView.m */,
 				4B19C27D1E8A012000A79017 /* Main.storyboard */,
@@ -178,6 +183,7 @@
 				4B19C28F1E8A06A900A79017 /* MarkViewController.m in Sources */,
 				4B19C2951E8A425800A79017 /* ShirtView.m in Sources */,
 				4B19C2981E8A6D0C00A79017 /* MarkShowCell.m in Sources */,
+				4B77FC541E8BAE4500977015 /* OperationModel.m in Sources */,
 				4B19C2791E8A012000A79017 /* AppDelegate.m in Sources */,
 				4B19C2761E8A012000A79017 /* main.m in Sources */,
 			);
